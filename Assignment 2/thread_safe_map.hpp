@@ -3,12 +3,13 @@
 #include <vector>
 #include <list>
 #include <thread>
+#include <mutex>
 #include <shared_mutex>
 #include <optional>
 using namespace std;
 
 template<typename T>
-class thrad_safe_map{
+class thread_safe_map{
 private:
   vector<list<pair<int, T>>> buckets;
 
