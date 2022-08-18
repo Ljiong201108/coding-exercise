@@ -6,7 +6,7 @@ pthread_mutex_t mutex=PTHREAD_MUTEX_INITIALIZER;
 /**
  * @return return the pointer which points to the data field after the control block
  */
-void *get_data(block_ctrl_t *block_ctrl){
+static void *get_data(block_ctrl_t *block_ctrl){
   return (void*)(block_ctrl+1);
 }
 
@@ -14,7 +14,7 @@ void *get_data(block_ctrl_t *block_ctrl){
  * 
  * @return return the pointer which points to the control block before the data field
  */
-block_ctrl_t *get_block_ctrl(void *data){
+static block_ctrl_t *get_block_ctrl(void *data){
   return (block_ctrl_t*)data-1;
 }
 
@@ -22,7 +22,7 @@ block_ctrl_t *get_block_ctrl(void *data){
  * iterator through the linked list in order to find a worst fit
  * @return return the pointer to the control block whose data field fits. If no such control block exists, return NULL
  */
-block_ctrl_t *find_fit(size_t fit_size){
+static block_ctrl_t *find_fit(size_t fit_size){
   block_ctrl_t *worst_fit=NULL;
   int cnt=0;
   for(block_ctrl_t *iter=head;iter!=NULL;iter=iter->nxt){
@@ -37,7 +37,7 @@ block_ctrl_t *find_fit(size_t fit_size){
 /**
  * split the data field of the given control block into the block with given size and the rest
  */ 
-void split_and_occupy_block(block_ctrl_t *block_ctrl, size_t size){
+static void split_and_occupy_block(block_ctrl_t *block_ctrl, size_t size){
   //there is no meaning to cut if the rest area is even not able to hold a control block
   if(block_ctrl->size-size<=BLOCK_CTRL_SIZE){
     block_ctrl->is_free=0;
@@ -60,7 +60,7 @@ void split_and_occupy_block(block_ctrl_t *block_ctrl, size_t size){
  * if no block can fit, we should use sbrk() to get more area
  * @return return whether it is successful to get more place from the OS
  */ 
-int append_new_area(size_t needed_size){
+static int append_new_area(size_t needed_size){
   //if tail is a free block, we do not need to create a new free block, just add into it
   //here needed_size must be positive because we assume that no block can fit => the size of all block is lower than needed size
   if(tail!=NULL && tail->is_free) needed_size-=tail->size;
@@ -92,7 +92,7 @@ int append_new_area(size_t needed_size){
  * we can prove that if we keep merging a block with neighbors after it is freed, there will be no two continuous blocks that are both free
  * under the assumption that there is no race condition
  */ 
-void free_and_merge_block(block_ctrl_t *block_ctrl){
+static void free_and_merge_block(block_ctrl_t *block_ctrl){
   block_ctrl->is_free=1;
   block_ctrl_t *left_block_ctrl=block_ctrl->pre, *right_block_ctrl=block_ctrl->nxt;
 

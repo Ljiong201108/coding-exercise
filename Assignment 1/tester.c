@@ -122,7 +122,7 @@ void *alloc_free(void *arg){
 }
 
 void multi_thread_test_case_1(){
-  printf("Test Case 1./m:\n");
+  printf("Test Case 1:\n");
   pthread_t t1, t2;
   pthread_create(&t1, NULL, &alloc_free_1, NULL);
   pthread_create(&t2, NULL, &alloc_free_2, NULL);
