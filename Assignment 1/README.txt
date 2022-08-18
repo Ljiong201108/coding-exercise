@@ -1,0 +1,5 @@
+The allocation policy I implemented is the worst fit. I used a linked list to arrange the memory in heap and everytime a memory segment is asked, the orst fit will find the largest free available memory block, split the block accordingly and finally assign it to the segment. If such memory block doesn't exist, I use sbrk() to allocate more place to use.
+
+The advantage of worst fit is that worst fit won't leave many small memory fragmentation which cannot assign. Additionally, the linear search time can be optimized by splay tree or other balanced trees, but I think splay tree is more advantageous, since the largest block is very likely to still be the largest block or one of the largest blocks after split, which leads to a relative low expected time complexity.
+
+I also wrote detailed comments in my code in order to help you to understand my code more easily.
