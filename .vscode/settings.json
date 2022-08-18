@@ -10,6 +10,9 @@
         "sstream": "cpp",
         "streambuf": "cpp",
         "shared_mutex": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "exception": "cpp",
+        "stdexcept": "cpp",
+        "iostream": "cpp"
     }
 }

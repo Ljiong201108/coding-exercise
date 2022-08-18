@@ -10,11 +10,6 @@ using namespace std;
 
 template<typename T=int>
 class thread_safe_map{
-private:
-  vector<list<pair<int, T>>> buckets;
-
-  mutable shared_mutex mutex;
-
 public:
   thread_safe_map(size_t);
 
@@ -23,10 +18,15 @@ public:
   optional<T> get(int) const;
 
   optional<T> remove(int);
+
+private:
+  vector<list<pair<int, T>>> buckets;
+
+  mutable shared_mutex mutex;
 };
 
 template<typename T>
-thread_safe_map<T>::thread_safe_map(size_t size):buckets(size) {}
+thread_safe_map<T>::thread_safe_map(size_t size) : buckets(size){}
 
 template<typename T>
 void thread_safe_map<T>::put(int key, T value){
