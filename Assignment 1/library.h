@@ -1,6 +1,9 @@
 #ifndef _LIBRARY_H_
 #define _LIBRARY_H_
 
+// for sbrk()
+#define _GNU_SOURCE
+
 #include <stddef.h>
 #include <unistd.h>
 #include <pthread.h>

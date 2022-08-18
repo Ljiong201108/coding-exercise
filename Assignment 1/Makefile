@@ -10,4 +10,4 @@ library.o: library.c library.h
 	gcc -std=c11 -o2 -c library.c -o library.o
 
 clean:
-	rm -rf tester library.o tester.o
+	rm -rf test library.o tester.o
