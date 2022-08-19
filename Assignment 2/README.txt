@@ -1,6 +1,6 @@
 shared memory protocol:
-An instruction occupies 3 bytes: operator, operand1, operand2
-A return value occupies 2 bytes: status(OK/BAD), return_value
+An instruction occupies 3 ints: operator, operand1, operand2
+A return value occupies 2 ints: status(OK/BAD), return_value
 
 I allocate one page of shared memory(4096 bytes). A queue with a head and a tail pointer is maintained in this page: the position of head is stored in the second last 4 bytes and the position of tail is stored in the last 4 bytes. The size of queue is by default 200. So we can get a following overview of this page:
 
