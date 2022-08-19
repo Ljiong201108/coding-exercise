@@ -11,13 +11,16 @@
 
 using namespace std;
 
+/**
+ * encapsulate the basic operation and its operand(s) into one class
+ */
 class instruction{
 private:
   const int instruction_id, operand1, operand2, qid;
 
 public:
-  instruction(int, int, int);
-  instruction(int, int, int, int);
+  instruction(int instruction_id, int operand1, int operand2);
+  instruction(int instruction_id, int operand1, int operand2, int qid);
 
   int get_operator() const;
   pair<int, int> get_operand() const;

@@ -22,6 +22,11 @@
 #define EMPTY 1
 #define FILLED 2
 
+/**
+ * shared_memory_controller is a class for controlling specficly. It bind the lifecycle of shared memory and semaphores with its lifecycle.
+ * Once an instantiation of this class is construct, shared memory and semaphores are also created and initialized correctly(if is server).
+ * Once an instantiation of this class is deconstruct, shared memory and semaphores are also released(if is server).
+ */
 class shared_memory_controller{
 public:
   shared_memory_controller(bool);
@@ -40,6 +45,9 @@ public:
 private:
   bool is_server;
 
+  //id_sem is the semaphore for queue
+  //id_ret_xxx is the semaphore for return value
+  //detailed PROTOCOL see README
   int id_shm, id_sem, id_ret_empty, id_ret_filled;
 
   int *addr;

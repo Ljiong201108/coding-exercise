@@ -2,7 +2,7 @@
 
 instruction::instruction(int instruction_id, int operand1, int operand2) : instruction_id(instruction_id), operand1(operand1), operand2(operand2), qid(-1) {}
 
-instruction::instruction(int instruction_id, int operand1, int operand2, int id) : instruction_id(instruction_id), operand1(operand1), operand2(operand2), qid(id) {}
+instruction::instruction(int instruction_id, int operand1, int operand2, int qid) : instruction_id(instruction_id), operand1(operand1), operand2(operand2), qid(qid) {}
 
 int instruction::get_operator() const {
   return instruction_id;

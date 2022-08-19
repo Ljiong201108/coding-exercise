@@ -4,9 +4,9 @@
 #include "client.h"
 
 void print_help(){
-  cout<<"Use the format: ./exec [-C] | [-S  size]"<<endl;
-  cout<<"Start the server at first and stop the server at last!"<<endl;
-  cout<<"Otherwise the shared memory will always be occupied!"<<endl;
+  cout<<"Use the format: [ ./exec [-C | -c] ] to create a client"<<endl;
+  cout<<"Use the format: [ ./exec [-S | -s] size ] to create a server"<<endl;
+  cout<<"Please start the server at first and stop the server at last!"<<endl;
 }
 
 int main(int argc, char** argv){
@@ -21,8 +21,8 @@ int main(int argc, char** argv){
     }
 
     arg=arg.substr(1);
-    if(arg=="C") is_client=true;
-    else if(arg=="S"){
+    if(arg=="C" || arg=="c") is_client=true;
+    else if(arg=="S" || arg=="s"){
       is_server=true;
       if(i!=argc-1){
         try{

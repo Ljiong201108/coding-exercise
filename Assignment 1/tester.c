@@ -94,6 +94,8 @@ void *alloc_free_1(void *arg){
 
   for(int i=0;i<3;i++)
     ts_free(segs[i]);
+
+  return NULL;
 }
 
 void *alloc_free_2(void *arg){
@@ -107,6 +109,8 @@ void *alloc_free_2(void *arg){
 
   for(int i=0;i<3;i++)
     ts_free(segs[i]);
+
+  return NULL;
 }
 
 void *alloc_free(void *arg){
@@ -119,6 +123,8 @@ void *alloc_free(void *arg){
   for(int i=0;i<10;i++){
     ts_free(segs[i]);
   }
+
+  return NULL;
 }
 
 void multi_thread_test_case_1(){

@@ -1,8 +1,9 @@
 #include "thread_safe_map.h"
 
-thread_safe_map::thread_safe_map(size_t size) : buckets(size){}
+thread_safe_map::thread_safe_map(size_t size) : buckets(size) {}
 
 void thread_safe_map::put(int key, int value){
+  //write operation, here only allows one thread to put
   unique_lock<shared_mutex> lck(mutex);
   auto &bucket=buckets[key%buckets.size()];
   auto pos=find_if(bucket.begin(), bucket.end(), [key](pair<int, int> value){return value.first==key;});
@@ -12,6 +13,7 @@ void thread_safe_map::put(int key, int value){
 }
 
 optional<int> thread_safe_map::get(int key) const {
+  //read operation, here allows multiple threads to get
   shared_lock<shared_mutex> lck(mutex);
   const auto &bucket=buckets.at(key%buckets.size());
   auto pos=find_if(bucket.begin(), bucket.end(), [key](pair<int, int> value){return value.first==key;});
@@ -21,6 +23,7 @@ optional<int> thread_safe_map::get(int key) const {
 }
 
 optional<int> thread_safe_map::remove(int key){
+  //write operation, here only allows one thread to remove
   unique_lock<shared_mutex> lck(mutex);
   auto &bucket=buckets[key%buckets.size()];
   auto pos=find_if(bucket.begin(), bucket.end(), [key](pair<int, int> value){return value.first==key;});

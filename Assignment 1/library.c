@@ -24,14 +24,13 @@ static block_ctrl_t *get_block_ctrl(void *data){
  */
 static block_ctrl_t *find_fit(size_t fit_size){
   block_ctrl_t *worst_fit=NULL;
-  int cnt=0;
   for(block_ctrl_t *iter=head;iter!=NULL;iter=iter->nxt){
     if(iter->is_free){
       if(worst_fit==NULL) worst_fit=iter;
       else if(iter->size>worst_fit->size) worst_fit=iter;
     } 
   }
-  return (worst_fit!=NULL && worst_fit->size>fit_size) ? worst_fit : NULL;
+  return (worst_fit!=NULL && worst_fit->size>=fit_size) ? worst_fit : NULL;
 }
 
 /**
@@ -121,7 +120,6 @@ void *ts_malloc(size_t size){
   }
 
   block_ctrl_t *block_ctrl;
-  int cnt=0;
   while(!(block_ctrl=find_fit(size))){
     if(!append_new_area(size)){
       pthread_mutex_unlock(&mutex);

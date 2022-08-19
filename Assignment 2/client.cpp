@@ -4,9 +4,9 @@ void client::print_help(){
   cout<<"PLease type command like this:"<<endl;
   cout<<"command [op1] [op2]"<<endl;
   cout<<"command list:"<<endl;
-  cout<<"PUT op1 op2"<<endl;
-  cout<<"GET op1"<<endl;
-  cout<<"REMOVE op1"<<endl;
+  cout<<"P | p | PUT op1 op2"<<endl;
+  cout<<"G | g | GET op1"<<endl;
+  cout<<"R | r | REMOVE op1"<<endl;
   cout<<"EXIT"<<endl;
 }
 
@@ -20,9 +20,9 @@ void client::start(){
     string command;
     int op1, op2;
     cin>>command;
-    if(command=="PUT"){
+    if(command=="P" || command=="p" || command=="PUT"){
       if(!(cin>>op1) || !(cin>>op2)){
-        cout<<"! Operand type false"<<endl;
+        cout<<"! Operand type invaild"<<endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         continue;
@@ -31,7 +31,7 @@ void client::start(){
       unsigned short qid=ctler.push_instruction(instruction(PUT, op1, op2));
       ctler.read_ret(qid);
       cout<<"[ Successfully put key-value pair ("<<op1<<", "<<op2<<") into map ]"<<endl;
-    }else if(command=="GET"){
+    }else if(command=="G" || command=="g" || command=="GET"){
       if(!(cin>>op1)){
         cout<<"! Operand type false"<<endl;
         cin.clear();
@@ -44,7 +44,7 @@ void client::start(){
 
       if(ret.first) cout<<"[ Value is "<<ret.second<<" ]"<<endl;
       else cout<<"! Key "<<op1<<" do not exist"<<endl;
-    }else if(command=="REMOVE"){
+    }else if(command=="R" || command=="r" || command=="REMOVE"){
       if(!(cin>>op1)){
         cout<<"! Operand type false"<<endl;
         cin.clear();

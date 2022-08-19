@@ -1,6 +1,7 @@
 #include "shared_memory_controller.h"
 
 shared_memory_controller::shared_memory_controller(bool is_server) : is_server(is_server){
+  //create or get shared memory and semaphore
   id_shm=shmget(KEY_SHM, SHM_SIZE, IPC_CREAT|0666);
   if(id_shm<0) throw runtime_error("cannot create or get id for shared memory");
   addr=(int*)shmat(id_shm, NULL, 0);
@@ -16,6 +17,7 @@ shared_memory_controller::shared_memory_controller(bool is_server) : is_server(i
   id_ret_filled=semget(KEY_RET_FILLED, QUEUE_SIZE, IPC_CREAT|0666);
   if(id_ret_filled<0) throw runtime_error("cannot create or get id for ret semaphore");
 
+  //if is server, also initialize
   if(is_server){
     union semun{unsigned short *init_val;} su, su_ret_empty, su_ret_filled;
     unsigned short tmp[3]={1, QUEUE_SIZE, 0};
@@ -35,6 +37,7 @@ shared_memory_controller::shared_memory_controller(bool is_server) : is_server(i
 }
 
 shared_memory_controller::~shared_memory_controller(){
+  //if id>=0, it should be released
   if(id_shm>=0){
     shmdt(addr);
     if(is_server) shmctl(id_shm, IPC_RMID, NULL);
@@ -45,11 +48,13 @@ shared_memory_controller::~shared_memory_controller(){
   if(is_server && id_ret_filled>=0) semctl(id_ret_filled, 0, IPC_RMID);
 }
 
+//P operation
 void shared_memory_controller::sem_post(int id, unsigned short num){
   struct sembuf op[1]={{num, 1, 0}};
   semop(id, op, 1);
 }
 
+//V operation
 void shared_memory_controller::sem_wait(int id, unsigned short num){
   struct sembuf op[1]={{num, -1, 0}};
   semop(id, op, 1);

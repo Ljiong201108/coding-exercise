@@ -8,6 +8,9 @@
 
 #define NUM_WORKER 10
 
+/**
+ * proxy for server
+ */
 class server{
 public:
   server(size_t);
