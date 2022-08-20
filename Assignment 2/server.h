@@ -6,7 +6,7 @@
 #include "thread_safe_map.h"
 #include "shared_memory_controller.h"
 
-#define NUM_WORKER 10
+#define NUM_WORKER 1
 
 /**
  * proxy for server

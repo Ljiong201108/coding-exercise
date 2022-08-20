@@ -1,13 +1,14 @@
+DEPS=library.h
+OBJ=test.o library.o
+CFLAG=-std=c17 -O2 -Wall -Werror
+
 .PHONY: clean
 
-test: tester.o library.o
-	gcc -std=c11 -o2 -Wall -Werror tester.o library.o -o test
+test: ${OBJ}
+	gcc ${CFLAG} -o $@ $^
 
-tester.o: tester.c library.h
-	gcc -std=c11 -o2 -Wall -Werror -c tester.c -o tester.o
-
-library.o: library.c library.h
-	gcc -std=c11 -o2 -Wall -Werror -c library.c -o library.o
+%.o: %.c ${DEPS}
+	gcc ${CFLAG} -c -o $@ $< 
 
 clean:
-	rm -rf test library.o tester.o
+	rm -rf test library.o test.o
